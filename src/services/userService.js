@@ -4,6 +4,9 @@ class UserService {
   }
 
   async getUserById(id) {
+    if (!id) {
+      throw new Error("id is required");
+    }
     return await this.databaseClient.findUserById(id);
   }
 }

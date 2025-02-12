@@ -10,4 +10,9 @@ describe('UserService', () => {
     const user = await userService.getUserById(1);
     expect(user).toEqual({ id: 1, name: 'John Doe' });
   });
+  
+  it('should throw an exception error when id is not provided', async () => {
+    const userService = new UserService(mockDatabaseClient);
+    await expect(userService.getUserById()).rejects.toThrow('id is required');
+  });
 });
