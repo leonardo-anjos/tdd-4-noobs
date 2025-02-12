@@ -7,6 +7,10 @@ class UserService {
     if (!id) {
       throw new Error("id is required");
     }
+
+    if (typeof id !== 'string') {
+      throw new Error('id must be a string');
+    }
   
     const user = await this.databaseClient.findUserById(id);
   
