@@ -7,7 +7,14 @@ class UserService {
     if (!id) {
       throw new Error("id is required");
     }
-    return await this.databaseClient.findUserById(id);
+  
+    const user = await this.databaseClient.findUserById(id);
+  
+    if (!user) {
+      throw new Error("user not found");
+    }
+  
+    return user;
   }
 }
 

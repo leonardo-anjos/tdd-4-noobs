@@ -24,4 +24,10 @@ describe('UserService', () => {
     mockDatabaseClient.findUserById.mockResolvedValue(mockUser);
     await expect(userService.getUserById()).rejects.toThrow('id is required');
   });
+
+  it('should throw an exception error when user is not found', async () => {
+    mockDatabaseClient.findUserById.mockResolvedValue(null);
+    await expect(userService.getUserById(1)).rejects.toThrow('user not found');
+  });
+  
 });
