@@ -1,18 +1,27 @@
 const UserService = require('../../services/userService');  
 
-const mockDatabaseClient = {
-  findUserById: jest.fn().mockResolvedValue({ id: 1, name: 'John Doe' })
-};
-
 describe('UserService', () => {
-  it('should return a user by id', async () => {
-    const userService = new UserService(mockDatabaseClient);
-    const user = await userService.getUserById(1);
-    expect(user).toEqual({ id: 1, name: 'John Doe' });
+  let userService;
+  let mockDatabaseClient;
+
+  beforeEach(() => {
+    mockDatabaseClient = {
+      findUserById: jest.fn(),
+    };
+
+    userService = new UserService(mockDatabaseClient);
   });
-  
+
+  it('should return a user by id', async () => {
+    const mockUser = { id: 1, name: 'John Doe' };
+    mockDatabaseClient.findUserById.mockResolvedValue(mockUser);
+    const user = await userService.getUserById(1);
+    expect(user).toEqual(mockUser);
+  });
+
   it('should throw an exception error when id is not provided', async () => {
-    const userService = new UserService(mockDatabaseClient);
+    const mockUser = { id: 1, name: 'John Doe' };
+    mockDatabaseClient.findUserById.mockResolvedValue(mockUser);
     await expect(userService.getUserById()).rejects.toThrow('id is required');
   });
 });
